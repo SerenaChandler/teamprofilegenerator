@@ -3,6 +3,34 @@
     text-align: center;
     color: white;
     padding-bottom: 50px;
-    padding-top: 25px;
+    padding-top: 50px;
     
+}
+
+.employeeBox {
+    border: solid rgb(70, 70, 70);
+    box-shadow: 5px 5px 5px;
+    border-radius: 5px;
+}
+
+.list {
+    border: solid black 1px;
+    background-color: white;
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-right: 40px;
+}
+
+.employeeTitle {
+    background-color: blue;
+    color: white;
+    padding-bottom: 10px;
+}
+
+.employeeInfo {
+    background-color: whitesmoke;
+}
+
+.text {
+    margin-left: 10px;
 }
