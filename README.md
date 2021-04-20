@@ -55,4 +55,4 @@ An application that runs in Node, it takes in user input and returns an HTML pag
 
 [repo](https://github.com/SerenaChandler/teamprofilegenerator)
 
-[Video-Walkthrough]()
+[Video-Walkthrough](https://www.youtube.com/watch?v=UUEtONPxMzY)
