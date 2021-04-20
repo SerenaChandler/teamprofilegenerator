@@ -1,8 +1,12 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const Choice = require('inquirer/lib/objects/choice');
+const Engineer = require('./lib/Engineer');
+const Manager = require('./lib/Manager');
+const Intern = require('./lib/Intern');
 
-const makeHTML = (input) =>
+team = []
+
+const makeHTML = (team) =>
 `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,25 +22,6 @@ const makeHTML = (input) =>
         <h1 class="header">My Team</h1>
     </header>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-4">
-                <div class="employeeBox">
-                    <div class="employeeTitle">
-                        <h1 class="text">${input.managerName}</h1>
-                        <h2 class="text">Manager</h2>
-                    </div>
-                    <div class="employeeInfo">
-                        <ul>
-                            <p class="list">ID: 2</p>
-                            <p class="list">Email: serena.com</p>
-                            <p class="list">Office Number: 3</p>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     
     
 </body>
@@ -44,58 +29,137 @@ const makeHTML = (input) =>
 
 
 
+    function addManager() {
+        inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "what is the manager's name?",
+                name: "managerName"
+            },
+            {
+                type: "input",
+                message: "what is the manager's ID?",
+                name: "managerID"
+            },
+            {
+                type: "input",
+                message: "what is the manager's email address?",
+                name: "managerEmail"
+            },
+            {
+                type: "input",
+                message: "what is the manager's Office Number?",
+                name: "managerOffice"
+            },
 
+        ])
+        .then(function (data) {
+            const name = data.managerName
+            const id = data.managerID
+            const email = data.managerEmail
+            const officeNumber = data.officeNumberconst 
+            const manager = new Manager(name, id, email, officeNumber)
+            team.push(manager)
+            addEmployee()
+        })};
 
-
-
-
-
-inquirer
-    .prompt([
-        {
-            type: "input",
-            message: "what is the manager's name?",
-            name: "managerName"
-        },
-        {
-            type: "input",
-            message: "what is the manager's ID?",
-            name: "managerID"
-        },
-        {
-            type: "input",
-            message: "what is the manager's email address?",
-            name: "managerEmail"
-        },
-        {
-            type: "input",
-            message: "what is the manager's Office Number?",
-            name: "managerOffice"
-        },
-        {
+    function addEmployee() {
+        inquirer
+        .prompt ([{
             type: "list",
-            message: "would you like to add a new Employee?",
+            message: "Which employee would you like to add?",
             name: "addEmployee",
-            choices: ["Engineer", "Intern", "Finish"]
-        },
+            choices: ["Engineer", "Intern", "None"]
+        }])
+        .then(function(data) {
 
-    ])
+            switch (data.addEmployee) {
+                case "Engineer":
+                    addEngineer();
+                    break;
+                case "Intern":
+                    addIntern();
+                    break;
+                case "None":
+                    makeHTML();
+                    break;
+
+            }
+        })}
+
+    function addEngineer() {
+        inquirer
+        .prompt ([
+            {
+                type: "input",
+                message: "Please enter their name?",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "what is the engineers's ID?",
+                name: "Id"
+            },
+            {
+                type: "input",
+                message: "Please enter their email adress",
+                name: "email"
+            },
+            {
+                type: "input",
+                message: "Please enter their GitHub",
+                name: "GitHub"
+            }
+        ])
+        .then(function(data) {
+            const name = data.name
+            const id = data.id
+            const email = data.email
+            const github = data.github
+            const engineer = new Engineer(name, id, email, github)
+            team.push(engineer)
+            addEmployee()
+        });
+    };
+
+    function addIntern() {
+        inquirer
+        .prompt ([
+            {
+                type: "input",
+                message: "Please enter their name?",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "what is the Intern's ID?",
+                name: "Id"
+            },
+            {
+                type: "input",
+                message: "Please enter their email adress",
+                name: "email"
+            },
+            {
+                type: "input",
+                message: "Please enter their school",
+                name: "school"
+            }
+        ])
+        .then(function(data) {
+            const name = data.name
+            const id = data.id
+            const email = data.email
+            const school = data.school
+            const intern = new Intern(name, id, email, github)
+            team.push(intern)
+            addEmployee()
+        });
+    }
+
+addManager()
+        
+    
 
 
-
-
-
-
-
-
-
-
-
-
-    .then((input) => {
-        const employeeList = makeHTML(input);
-
-        fs.writeFile("Team.html", employeeList, (err) =>
-        err ? console.log(err) : console.log("creating team")
-        );
-    });
