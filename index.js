@@ -3,6 +3,7 @@ const fs = require('fs');
 const Engineer = require('./lib/Engineer');
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
+const Employee = require('./lib/Employee')
 
 team = []
 
@@ -24,18 +25,53 @@ team = []
             <header>
                 <h1 class="header">My Team</h1>
             </header>
+            <div class = "container">
+            <div class = "row">
             `
-            fullHTML.push(HTMLTemplate)
-        const HTMLCards = 
-            `<div>
-
-            </div>
-            
-            
+        fullHTML.push(HTMLTemplate)
+        
+        for (let i = 0; i < team.length; i++) {
+            let object = `
+                    <div class="col-4">
+                        <div class="employeeBox">
+                            <div class="employeeTitle">
+                                <h2 class = "text">${team[i].name}</h2>
+                                <h2 class = "text">${team[i].getRole()}</h2>
+                            </div>
+                            <div class="employeeInfo">
+                                <p class = "list">Employee ID: ${team[i].id}</p>
+                                <p class = "list">Email: <a href="mailto:${team[i].email}">${team[i].email}</a></p>
+                        `
+            if (team[i].officeNumber) {
+                object += `
+                <p class = "list">OfficeNumber: ${team[i].getOffice()}</p>
+                `
+            }
+            if (team[i].github) {
+                object += `
+                <p class = "list">GitHub: <a href="https://github.com/${team[i].getGitHub()}">${team[i].getGitHub()}</a></p>
+                `
+            }
+            if (team[i].school) {
+                object += `
+                <p class = "list">School: ${team[i].getSchool()}</p>
+                `
+            }
+            object += `
+                                </div>
+                                </div>
+                                </div>
+    
+            `
+            fullHTML.push(object)
+        }
+        
+       
+          const footer =  `</div>    
+          </div>  
         </body>
         </html>`
-        fullHTML.push(HTMLCards)
-
+        fullHTML.push(footer)
         
 
         fs.writeFile("team.html", fullHTML.join(""), (err) =>
@@ -73,7 +109,7 @@ team = []
             const name = data.managerName
             const id = data.managerID
             const email = data.managerEmail
-            const officeNumber = data.officeNumberconst 
+            const officeNumber = data.managerOffice 
             const manager = new Manager(name, id, email, officeNumber)
             team.push(manager)
             addEmployee()
@@ -114,7 +150,7 @@ team = []
             {
                 type: "input",
                 message: "what is the engineers's ID?",
-                name: "Id"
+                name: "id"
             },
             {
                 type: "input",
@@ -131,7 +167,7 @@ team = []
             const name = data.name
             const id = data.id
             const email = data.email
-            const github = data.github
+            const github = data.GitHub
             const engineer = new Engineer(name, id, email, github)
             team.push(engineer)
             addEmployee()
@@ -149,7 +185,7 @@ team = []
             {
                 type: "input",
                 message: "what is the Intern's ID?",
-                name: "Id"
+                name: "id"
             },
             {
                 type: "input",
